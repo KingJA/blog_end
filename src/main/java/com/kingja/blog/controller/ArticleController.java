@@ -36,6 +36,12 @@ public class ArticleController {
     public Result getArticles() {
         List<Article> articles = articleDao.findAll();
         return new Result(0, "获取文章成功", articles);
+    }
 
+    @CrossOrigin
+    @GetMapping(value = "/get")
+    public Result getArticleById(@RequestParam("id") String id) {
+        Article article = articleDao.findById(Integer.valueOf(id)).get();
+        return new Result(0, "请求文章成功", article);
     }
 }
