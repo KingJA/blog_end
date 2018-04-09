@@ -1,5 +1,6 @@
 package com.kingja.blog.entity;
 
+import com.kingja.blog.util.DateUtil;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -50,16 +51,16 @@ public class Article {
         this.content = content;
     }
 
-    public Date getCreatetime() {
-        return createtime;
+    public String getCreatetime() {
+        return DateUtil.getStringDate(createtime) ;
     }
 
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
     }
 
-    public Date getUpdatetime() {
-        return updatetime;
+    public String getUpdatetime() {
+        return DateUtil.getStringDate(updatetime) ;
     }
 
     public void setUpdatetime(Date updatetime) {

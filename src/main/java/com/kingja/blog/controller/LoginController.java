@@ -3,17 +3,11 @@ package com.kingja.blog.controller;
 import com.kingja.blog.dao.UserDao;
 import com.kingja.blog.entity.Result;
 import com.kingja.blog.entity.User;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Description:TODO
@@ -38,6 +32,11 @@ public class LoginController {
         System.out.println("username:" + username);
         System.out.println("password:" + password);
         List<User> users = userDao.findUserByUsernameAndPassword(username, password);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (users.size() > 0) {
             return new Result(0, "登录成功", users.get(0));
         } else {

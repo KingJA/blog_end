@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2018-04-04 17:26:46
+Date: 2018-04-09 17:31:09
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -46,4 +46,23 @@ CREATE TABLE `hibernate_sequence` (
 -- Records of hibernate_sequence
 -- ----------------------------
 INSERT INTO `hibernate_sequence` VALUES ('29');
+
+-- ----------------------------
+-- Table structure for user
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `password` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `createtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatetime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES ('1', 'bbb', 'aaa', null, null);
+INSERT INTO `user` VALUES ('2', 'wzy1gqqbuu', 'KingJA', '2018-04-09 16:11:35', '2018-04-09 16:11:35');
 SET FOREIGN_KEY_CHECKS=1;
