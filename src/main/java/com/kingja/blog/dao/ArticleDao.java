@@ -4,6 +4,7 @@ import com.kingja.blog.entity.Article;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Description：TODO
@@ -13,5 +14,9 @@ import javax.transaction.Transactional;
  */
 @Transactional
 public interface ArticleDao extends JpaRepository<Article, Integer> {
+
+    public List<Article> findByTitleLike(String keyword);
+
+    public List<Article> findByContentLike(String keyword);
 
 }

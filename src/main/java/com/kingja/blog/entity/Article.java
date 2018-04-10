@@ -19,7 +19,7 @@ import java.util.Date;
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int article_id;
+    private int id;
     private String title;
     private String content;
     @CreatedDate
@@ -27,14 +27,13 @@ public class Article {
     @LastModifiedDate
     private Date updatetime;
 
-    public int getArticle_id() {
-        return article_id;
+    public int getId() {
+        return id;
     }
 
-    public void setArticle_id(int article_id) {
-        this.article_id = article_id;
+    public void setId(int id) {
+        this.id = id;
     }
-
     public String getTitle() {
         return title;
     }

@@ -18,3 +18,7 @@ Content type 'multipart/form-data;boundary=----WebKitFormBoundaryTVc9eDC2a2elulO
 https://www.jishux.com/plus/view-599736-1.html
 
 *SQL [n/a]; nested exception is org.hibernate.exception.DataException: could not execute statement
+
+* jpa增删改查 https://blog.csdn.net/u012706811/article/details/53218083 
+
+* 全局异常捕捉
