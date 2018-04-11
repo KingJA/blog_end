@@ -3,6 +3,7 @@ package com.kingja.blog.controller;
 import com.kingja.blog.dao.ArticleDao;
 import com.kingja.blog.entity.Article;
 import com.kingja.blog.entity.Result;
+import com.kingja.blog.util.ConverUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,6 +48,11 @@ public class ArticleController {
     @GetMapping(value = "/get")
     public Result getArticleById(@RequestParam("id") String id) {
         Article article = articleDao.findById(Integer.valueOf(id)).get();
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return new Result(0, "请求文章成功", article);
     }
 
@@ -69,7 +75,7 @@ public class ArticleController {
 
     @CrossOrigin
     @PostMapping(value = "/query")
-    public Result query(@RequestParam("type") String type, @RequestParam("keyword") String keyword) {
+    public Result<List<Article>> query(@RequestParam("type") String type, @RequestParam("keyword") String keyword) {
         keyword = "%" +keyword+ "%";
         List<Article> results;
         if ("title".equals(type)) {
@@ -77,6 +83,16 @@ public class ArticleController {
         } else {
             results = articleDao.findByContentLike(keyword);
         }
-        return new Result(0, "查询成功", results);
+        return new Result<>(0, "查询成功", results);
     }
+
+    @CrossOrigin
+    @PostMapping(value = "/published")
+    public Result setPublishedStatus(@RequestParam("id") String id) {
+        Article modifyedArticle = articleDao.findById(Integer.valueOf(id)).get();
+        modifyedArticle.setPublished(ConverUtil.reversal(modifyedArticle.getPublished()));
+        articleDao.saveAndFlush(modifyedArticle);
+        return new Result(0, "操作成功", null);
+    }
+
 }

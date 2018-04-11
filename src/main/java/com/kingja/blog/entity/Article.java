@@ -20,12 +20,21 @@ public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    private int published;
     private String title;
     private String content;
     @CreatedDate
     private Date createtime;
     @LastModifiedDate
     private Date updatetime;
+
+    public int getPublished() {
+        return published;
+    }
+
+    public void setPublished(int published) {
+        this.published = published;
+    }
 
     public int getId() {
         return id;
