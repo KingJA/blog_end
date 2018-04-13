@@ -2,20 +2,16 @@ package com.kingja.blog.controller;
 
 import com.kingja.blog.dao.ArticleDao;
 import com.kingja.blog.dao.CatalogDao;
+import com.kingja.blog.dto.ArticleDTO;
 import com.kingja.blog.entity.Article;
-import com.kingja.blog.entity.ArticleItem;
 import com.kingja.blog.entity.Catalog;
 import com.kingja.blog.entity.Result;
 import com.kingja.blog.util.ConverUtil;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -58,8 +54,12 @@ public class ArticleController {
 
     @CrossOrigin
     @PostMapping(value = "/all")
-    public Result<List<ArticleItem>> getArticles() {
-        List<ArticleItem> articles = articleDao.findArticleItem();
+    public Result<List<ArticleDTO>> getArticles(HttpServletRequest request,HttpServletResponse response) {
+//        Cookie[] cookies = request.getCookies();
+//        System.out.println("cookies length:"+cookies.length);
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        List<ArticleDTO> articles = articleDao.findArticleItem();
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

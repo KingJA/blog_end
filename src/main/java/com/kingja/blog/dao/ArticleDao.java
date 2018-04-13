@@ -1,7 +1,7 @@
 package com.kingja.blog.dao;
 
 import com.kingja.blog.entity.Article;
-import com.kingja.blog.entity.ArticleItem;
+import com.kingja.blog.dto.ArticleDTO;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,7 +23,8 @@ public interface ArticleDao extends JpaRepository<Article, Integer> {
 
     public List<Article> findByContentLike(String keyword);
 
-    @Query("select new com.kingja.blog.entity.ArticleItem(article.id,catalog.name, article.title,article.content, article.createtime) FROM Article article left join Catalog catalog ON article.catalogid=catalog.id")
-    List<ArticleItem> findArticleItem();
+    @Query("select new com.kingja.blog.dto.ArticleDTO(article.id,catalog.name, article.title,article.content, article" +
+            ".createtime) FROM Article article left join Catalog catalog ON article.catalogid=catalog.id")
+    List<ArticleDTO> findArticleItem();
 
 }

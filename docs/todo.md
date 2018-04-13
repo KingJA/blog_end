@@ -22,3 +22,4 @@ https://www.jishux.com/plus/view-599736-1.html
 * jpa增删改查 https://blog.csdn.net/u012706811/article/details/53218083 
 
 * 全局异常捕捉
+* 跨域请求无法携带cookie

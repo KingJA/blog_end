@@ -1,9 +1,10 @@
-package com.kingja.blog.entity;
+package com.kingja.blog.dto;
+
+import com.kingja.blog.util.DateUtil;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-
-import lombok.Data;
 
 /**
  * Description：TODO
@@ -12,14 +13,14 @@ import lombok.Data;
  * Email:kingjavip@gmail.com
  */
 @Data
-public class ArticleItem implements Serializable {
+public class ArticleDTO implements Serializable {
     private int id;
     private String name;
     private String title;
     private String content;
     private Date createtime;
 
-    public ArticleItem(int id, String name, String title, String content, Date createtime) {
+    public ArticleDTO(int id, String name, String title, String content, Date createtime) {
         this.id = id;
         this.name = name;
         this.title = title;
@@ -27,6 +28,14 @@ public class ArticleItem implements Serializable {
         this.createtime = createtime;
     }
 
-    public ArticleItem() {
+    public String getCreatetime() {
+        return DateUtil.getStringDate(createtime);
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
+    }
+
+    public ArticleDTO() {
     }
 }
