@@ -23,3 +23,6 @@ https://www.jishux.com/plus/view-599736-1.html
 
 * 全局异常捕捉
 * 跨域请求无法携带cookie
+* springboot AOP的使用
+* 配置过滤器 https://baijiahao.baidu.com/s?id=1582930930971867545&wfr=spider&for=pc
+* RequestHeader,CookieValue

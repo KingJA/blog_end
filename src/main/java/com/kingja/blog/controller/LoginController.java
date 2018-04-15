@@ -1,13 +1,24 @@
 package com.kingja.blog.controller;
 
+import com.kingja.blog.aspect.HttpAspect;
 import com.kingja.blog.dao.UserDao;
-import com.kingja.blog.entity.Result;
+import com.kingja.blog.dto.UserDTO;
+import com.kingja.blog.entity.ResultVO;
 import com.kingja.blog.entity.User;
+import com.kingja.blog.enums.ResultEnum;
+import com.kingja.blog.exception.BlogException;
+import com.kingja.blog.util.JwtUtil;
+import com.kingja.blog.util.ResultVoUtil;
+
 import lombok.extern.slf4j.Slf4j;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -21,38 +32,35 @@ import java.util.List;
 @RequestMapping(value = "/api/admin")
 @Slf4j
 public class LoginController {
-
+    private Logger logger = LoggerFactory.getLogger(LoginController.class);
     @Autowired
     private UserDao userDao;
 
     @CrossOrigin
     @PostMapping("/login")
-    public Result login(@RequestParam(value = "username") String username, @RequestParam(value = "password") String
-            password,HttpServletResponse response) {
-        log.debug("username:" + username);
-        log.debug("password:" + password);
-        System.out.println("username:" + username);
-        System.out.println("password:" + password);
-        String origin = response.getHeader("Origin");
-        if(origin == null) {
-            origin = response.getHeader("Referer");
-        }
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");            // 允许指定域访问跨域资源
-        response.setHeader("Access-Control-Allow-Credentials", "true");       // 允许客户端携带跨域cookie，此时origin值不能为“*”，只能为指定单一域名
+    public ResultVO login(@RequestParam(value = "username") String username, @RequestParam(value = "password") String
+            password, HttpServletResponse response, HttpServletRequest request) {
+        logger.error("username:"+username+"password:"+password);
+        String token = request.getHeader("token");
+        logger.error("token:"+token);
         List<User> users = userDao.findUserByUsernameAndPassword(username, password);
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         if (users.size() > 0) {
-            Cookie cookie = new Cookie("token", users.get(0).getUsername());
-            cookie.setMaxAge(60*10); //设置cookie的过期时间是10s
+            User user = users.get(0);
+            String jwt = JwtUtil.createJWT(user.getId() + "", user.getUsername(), 1000 * 60 * 60 * 24
+                    * 30);
+            Cookie cookie = new Cookie("token", jwt);
+            cookie.setPath("/api");
+            cookie.setMaxAge(60*10000); //设置cookie的过期时间是10s
             response.addCookie(cookie);
-            return new Result(0, "登录成功", users.get(0));
-        } else {
-            return new Result(1, "登录失败", null);
+
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(user.getId());
+            userDTO.setUsername(user.getUsername());
+            userDTO.setJwt(jwt);
+
+            return ResultVoUtil.success(userDTO);
         }
+         throw new BlogException(ResultEnum.LOGIN_ERROR.getCode(), ResultEnum.LOGIN_ERROR.getMsg());
 
     }
 }
