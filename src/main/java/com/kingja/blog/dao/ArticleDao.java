@@ -22,6 +22,7 @@ public interface ArticleDao extends JpaRepository<Article, Integer> {
     public List<Article> findByTitleLike(String keyword);
 
     public List<Article> findByContentLike(String keyword);
+    public List<Article> findByCatalogid(Integer catelogId);
 
     @Query("select new com.kingja.blog.dto.ArticleDTO(article.id,catalog.name, article.title,article.content, article" +
             ".createtime) FROM Article article left join Catalog catalog ON article.catalogid=catalog.id")

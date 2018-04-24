@@ -106,6 +106,17 @@ public class ArticleController {
     public ResultVO getCatalogs() {
         List<Catalog> result = catalogDao.findAll();
         return ResultVoUtil.success(result);
+    }
 
+    @CrossOrigin
+    @PostMapping(value = "/articlesBycatalogId")
+    public ResultVO getArticlesByCagalogId(@RequestParam("catalogid") String catalogid) {
+        List<Article> articles = articleDao.findByCatalogid(Integer.valueOf(catalogid) );
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return  ResultVoUtil.success(articles);
     }
 }
