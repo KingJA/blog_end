@@ -6,6 +6,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -16,7 +17,8 @@ import java.util.Date;
  */
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Article {
+public class Article implements Serializable {
+    private static final long serialVersionUID = -8146303746013735057L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -81,5 +83,18 @@ public class Article {
 
     public void setUpdatetime(Date updatetime) {
         this.updatetime = updatetime;
+    }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", catalogid=" + catalogid +
+                ", published=" + published +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", createtime=" + createtime +
+                ", updatetime=" + updatetime +
+                '}';
     }
 }

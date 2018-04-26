@@ -8,8 +8,11 @@ import com.kingja.blog.entity.Catalog;
 import com.kingja.blog.entity.ResultVO;
 import com.kingja.blog.util.ConverUtil;
 import com.kingja.blog.util.ResultVoUtil;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +26,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/article")
 public class ArticleController {
-
+    private Logger logger = LoggerFactory.getLogger(ArticleController.class);
     @Autowired
     private ArticleDao articleDao;
     @Autowired
@@ -31,7 +34,9 @@ public class ArticleController {
 
     @CrossOrigin
     @PostMapping(value = "/add")
+    @CacheEvict(cacheNames = "articles", key = "888")
     public ResultVO addArticle(Article article) {
+        logger.error(article.toString());
         articleDao.save(article);
         return  ResultVoUtil.success(article);
 
@@ -40,7 +45,9 @@ public class ArticleController {
 
     @CrossOrigin
     @PostMapping(value = "/all")
+    @Cacheable(cacheNames = "articles", key = "888")
     public ResultVO getArticles() {
+        logger.error("获取全部文章");
         List<ArticleDTO> articles = articleDao.findArticleItem();
         try {
             Thread.sleep(1000);
@@ -64,6 +71,7 @@ public class ArticleController {
 
     @CrossOrigin
     @PostMapping(value = "/modify")
+    @CacheEvict(cacheNames = "articles", key = "888")
     public ResultVO modifyArticle(Article article) {
         Article exitArticle = articleDao.findById(article.getId()).get();
         exitArticle.setTitle(article.getTitle());
