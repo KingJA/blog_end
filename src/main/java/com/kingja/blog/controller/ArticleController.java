@@ -12,10 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * Description：TODO
@@ -45,16 +45,26 @@ public class ArticleController {
 
     @CrossOrigin
     @PostMapping(value = "/all")
-    @Cacheable(cacheNames = "articles", key = "888")
+//    @Cacheable(cacheNames = "articles", key = "888")
     public ResultVO getArticles() {
-        logger.error("获取全部文章");
-        List<ArticleDTO> articles = articleDao.findArticleItem();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (new Random().nextInt(2) == 0) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return  ResultVoUtil.error(1,"获取文章失败");
+        }else{
+            logger.error("获取全部文章");
+            List<ArticleDTO> articles = articleDao.findArticleItem();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return  ResultVoUtil.success(articles);
         }
-        return  ResultVoUtil.success(articles);
+
     }
 
     @CrossOrigin
