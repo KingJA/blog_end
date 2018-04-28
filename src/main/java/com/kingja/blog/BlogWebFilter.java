@@ -38,24 +38,25 @@ public class BlogWebFilter implements Filter {
         logger.error("自定义过滤器->doFilter");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        String origin = request.getHeader("Origin");
-        String headers = request.getHeader("Access-Control-Request-Headers");
-        logger.error("headers:"+headers);
-        if (origin == null) {
-            origin = request.getHeader("Referer");
-        }
-        // 允许指定域访问跨域资源
-        response.setHeader("Access-Control-Allow-Origin", origin);//带cookie的话不能为*
-        response.setHeader("Access-Control-Allow-Methods", "*");
-//        response.setHeader("Access-Control-Max-Age", "3600");//预检命令的缓存时间
-        //允许携带cookie
-        response.setHeader("Access-Control-Allow-Credentials", "true");
-        //允许请求头
-        if (headers != null) {
-            response.setHeader("Access-Control-Allow-Headers", headers);
-        }
-
-        response.setHeader("Access-Control-Expose-Headers", "*");
+        //支付跨域
+//        String origin = request.getHeader("Origin");
+//        String headers = request.getHeader("Access-Control-Request-Headers");
+//        logger.error("headers:"+headers);
+//        if (origin == null) {
+//            origin = request.getHeader("Referer");
+//        }
+//        // 允许指定域访问跨域资源
+//        response.setHeader("Access-Control-Allow-Origin", origin);//带cookie的话不能为*
+//        response.setHeader("Access-Control-Allow-Methods", "*");
+////        response.setHeader("Access-Control-Max-Age", "3600");//预检命令的缓存时间
+//        //允许携带cookie
+//        response.setHeader("Access-Control-Allow-Credentials", "true");
+//        //允许请求头
+//        if (headers != null) {
+//            response.setHeader("Access-Control-Allow-Headers", headers);
+//        }
+//
+//        response.setHeader("Access-Control-Expose-Headers", "*");
 
 //        if (request.getMethod().equals("OPTIONS")) {
 //            HttpUtil.setResponse(response, HttpStatus.OK.value(), null);
