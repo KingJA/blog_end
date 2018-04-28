@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableJpaAuditing
 @RestController
 @SpringBootApplication
-@ServletComponentScan
-@EnableCaching
+@ServletComponentScan //过滤器
+@EnableCaching //redis缓存
 public class BlogApplication {
 
     @RequestMapping("/")

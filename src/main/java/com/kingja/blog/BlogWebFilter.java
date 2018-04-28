@@ -1,19 +1,20 @@
 package com.kingja.blog;
 
+import com.google.gson.Gson;
+import com.kingja.blog.entity.ResultVO;
+import com.kingja.blog.util.ResultVoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
-import java.io.IOException;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Description:TODO
@@ -21,13 +22,14 @@ import javax.servlet.http.HttpServletResponse;
  * Author:KingJA
  * Email:kingjavip@gmail.com
  */
-@WebFilter(urlPatterns = "/*")
+@WebFilter()
 public class BlogWebFilter implements Filter {
     private Logger logger = LoggerFactory.getLogger(BlogWebFilter.class);
+    private List<String> filterPaths =new ArrayList<>();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        filterPaths.add("admin");
     }
 
     @Override
@@ -42,8 +44,6 @@ public class BlogWebFilter implements Filter {
         if (origin == null) {
             origin = request.getHeader("Referer");
         }
-
-
         // 允许指定域访问跨域资源
         response.setHeader("Access-Control-Allow-Origin", origin);//带cookie的话不能为*
         response.setHeader("Access-Control-Allow-Methods", "*");
@@ -61,7 +61,27 @@ public class BlogWebFilter implements Filter {
 //            HttpUtil.setResponse(response, HttpStatus.OK.value(), null);
 //            return;
 //        }
-        filterChain.doFilter(servletRequest, servletResponse);
+
+        logger.error("path:"+request.getServletPath());
+        if(!request.getServletPath().contains("admin")){
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
+
+        String token = request.getHeader("token");
+        if (StringUtils.isEmpty(token)) {
+            response.setContentType("text/json");
+            /* 设置字符集为'UTF-8' */
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter out = response.getWriter();
+            ResultVO reponseBody = ResultVoUtil.error(444, "用户未登录");
+            out.write( new Gson().toJson(reponseBody));
+            out.flush();
+        }else{
+            logger.error("接收到token:"+token);
+            filterChain.doFilter(servletRequest, servletResponse);
+        }
+
     }
 
     @Override

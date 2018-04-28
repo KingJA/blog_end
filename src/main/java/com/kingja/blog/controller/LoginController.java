@@ -1,6 +1,5 @@
 package com.kingja.blog.controller;
 
-import com.kingja.blog.aspect.HttpAspect;
 import com.kingja.blog.dao.UserDao;
 import com.kingja.blog.dto.UserDTO;
 import com.kingja.blog.entity.ResultVO;
@@ -9,9 +8,7 @@ import com.kingja.blog.enums.ResultEnum;
 import com.kingja.blog.exception.BlogException;
 import com.kingja.blog.util.JwtUtil;
 import com.kingja.blog.util.ResultVoUtil;
-
 import lombok.extern.slf4j.Slf4j;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +26,7 @@ import java.util.List;
  * Email:kingjavip@gmail.com
  */
 @RestController
-@RequestMapping(value = "/api/admin")
+@RequestMapping(value = "/api")
 @Slf4j
 public class LoginController {
     private Logger logger = LoggerFactory.getLogger(LoginController.class);

@@ -25,5 +25,7 @@ https://www.jishux.com/plus/view-599736-1.html
 * 跨域请求无法携带cookie
 * springboot AOP的使用
 * 配置过滤器 https://baijiahao.baidu.com/s?id=1582930930971867545&wfr=spider&for=pc
+https://www.cnblogs.com/begin2016/p/8947887.html
+设置例外https://www.cnblogs.com/xiaoping1993/p/7873975.html
 * RequestHeader,CookieValue
 * Redis进行缓存

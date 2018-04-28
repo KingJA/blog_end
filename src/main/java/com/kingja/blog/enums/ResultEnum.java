@@ -11,6 +11,7 @@ import lombok.Getter;
 @Getter
 public enum ResultEnum {
     LOGIN_ERROR(1, "登录失败"),
+    SHOULD_LOGIN(444, "用户未登录"),
     ORDER_OWNER_ERROR(18, "查询openid不一致");
     private Integer code;
     private String msg;
