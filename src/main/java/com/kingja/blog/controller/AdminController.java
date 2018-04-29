@@ -81,16 +81,16 @@ public class AdminController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/catalog")
+    @GetMapping(value = "/catalogs")
     public ResultVO getCatalogs() {
         List<Catalog> result = catalogDao.findAll();
         return ResultVoUtil.success(result);
     }
 
     @CrossOrigin
-    @PostMapping(value = "/articlesBycatalogId")
-    public ResultVO getArticlesByCagalogId(@RequestParam("catalogid") String catalogid) {
-        List<Article> articles = articleDao.findByCatalogid(Integer.valueOf(catalogid) );
+    @PostMapping(value = "/articles")
+    public ResultVO getArticlesByCagalogId(@RequestParam("catalogId") String catalogId) {
+        List<Article> articles = articleDao.findByCatalogid(Integer.valueOf(catalogId) );
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

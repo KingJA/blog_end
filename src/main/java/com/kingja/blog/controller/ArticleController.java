@@ -29,7 +29,7 @@ public class ArticleController {
     @PostMapping(value = "/all")
 //    @Cacheable(cacheNames = "articles", key = "888")
     public ResultVO getArticles() {
-        if (new Random().nextInt(2) == 0) {
+        if (new Random().nextInt(2) > 2) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
