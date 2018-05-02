@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/blog?useUnicode=true&characterEncoding=UTF-8&useSSL=true
     username: root
-    password: wzyygqqbuu
+    password: Wzy1gqqbuu-
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     hibernate:
@@ -15,7 +15,8 @@ spring:
     default-property-inclusion: non_null
   mvc:
     dispatch-options-request: true
-server:
-  port: 8077
-
+#server:
+#  port: 8077
+#  servlet:
+#    context-path: /blog
 
