@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableJpaAuditing
 @RestController
 @SpringBootApplication
-@ServletComponentScan //过滤器
+//@ServletComponentScan //过滤器
 @EnableCaching //redis缓存
 public class BlogApplication extends SpringBootServletInitializer {
 
